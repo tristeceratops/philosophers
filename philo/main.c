@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/18 15:34:58 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:50:45 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ void printlog(t_philo *philo, char *str, t_data *data)
 	long timestamp;
 
 	gettimeofday(&time, NULL);
-	timestamp = (time.tv_sec - data->start.tv_sec) * 1000; // convert seconds to milliseconds
-	timestamp += (time.tv_usec - data->start.tv_usec) / 1000; // convert microseconds to milliseconds
+	timestamp = (time.tv_sec - data->start.tv_sec) * 1000;
+	timestamp += (time.tv_usec - data->start.tv_usec) / 1000;
 	printf("%-8ld %-8d %-4s\n", timestamp, philo->philo_id, str);
 }
 
-void	free_all_philo(t_philo *philo)
+void	free_all_philo(t_data *data, t_philo *philo)
 {
 	t_philo	*tmp;
 
-	while (philo)
+	while (philo->philo_id < data->philo_max)
 	{
 		tmp = philo;
 		philo = philo->next;
-		pthread_mutex_destroy(&tmp->fork_l);
-		if (tmp->fork_r)
-			pthread_mutex_destroy(tmp->fork_r);
+		pthread_mutex_destroy(tmp->l_fork);
+		if (tmp->r_fork)
+			pthread_mutex_destroy(tmp->r_fork);
 		free(tmp);
 	}
 }
@@ -53,6 +53,14 @@ int	check_args(int argc, char **argv)
 	}
 	return (1);
 }
+void	philo_rfork(t_philo *philo)
+{
+	while (philo->r_fork == NULL)
+	{
+		philo->r_fork = philo->next->l_fork;
+		philo = philo->next;
+	}
+}
 
 void	add_philo(t_philo **philo, int id)
 {
@@ -64,7 +72,9 @@ void	add_philo(t_philo **philo, int id)
 		return ;
 	new->philo_id = id;
 	new->isalive = 1;
-	if(pthread_mutex_init(&new->fork_l, NULL) != 0)
+	new->l_fork = malloc(sizeof(pthread_mutex_t));
+	new->r_fork = NULL;
+	if(pthread_mutex_init(new->l_fork, NULL) != 0)
 	{
 		free(new);
 		return ;
@@ -97,6 +107,23 @@ void	init_data(t_data *data, char **argv)
 	data->is_dead = 0;
 	gettimeofday(&data->start, NULL);
 }
+void connect_first_and_last(t_philo **philo) {
+	
+	t_philo *first;
+	t_philo *last;
+	
+	if (*philo == NULL)
+		return ;
+	first = *philo;
+	last = *philo;
+	while (last->next != NULL)
+		last = last->next;
+	if (first != last)
+	{
+		first->prev = last;
+		last->next = first;
+	}
+}
 
 void	init_philo(t_philo **philo, t_data *data)
 {
@@ -108,6 +135,8 @@ void	init_philo(t_philo **philo, t_data *data)
 		add_philo(philo, i);
 		i++;
 	}
+	connect_first_and_last(philo);
+	philo_rfork(*philo);
 }
 
 int	main(int argc, char **argv)
@@ -124,5 +153,7 @@ int	main(int argc, char **argv)
 	}
 	init_data(data, argv);
 	init_philo(&philo, data);
-	free_all_philo(philo);
+	data->head = philo;
+	init_threads(data, philo);
+	free_all_philo(data, philo);
 }
