@@ -6,35 +6,18 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 11:16:58 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/21 14:07:23 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:57:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_meal(t_data *data)
-{
-	if (data->head->philo_id % 2 == 1)
-	{
-		pthread_mutex_lock(data->head->l_fork);
-		forking(data, data->head);
-		pthread_mutex_lock(data->head->r_fork);
-		forking(data, data->head);
-	}
-	else
-	{
-		thinking(data, data->head);
-	}
-}
-
 void	*philo_thread(void *arg)
 {
 	t_data *data;
 	data = (t_data *) arg;
-	gettimeofday(&data->start, NULL);
-	init_meal(data);
 	usleep(10 * (data->philo_max));
-	meal(data, data->head);
+	printf("[%s]\n", data->time_die);
 	pthread_exit(0);
 }
 
@@ -58,10 +41,10 @@ int	init_threads(t_data *data, t_philo *philo)
 	gettimeofday(&data->start, NULL);
 	j = 0;
 	while (j < i)
-    {
-        pthread_join(head->thread, NULL);
+	{
+		pthread_join(head->thread, NULL);
 		head = head->next;
 		j++;
-    }
+	}
 	return (1);
 }

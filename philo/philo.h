@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/21 14:06:38 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:00:17 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,5 @@ int		ft_check_str(const char *str);
 int		ft_isnum(char c);
 int		init_threads(t_data *data, t_philo *philo);
 void	printlog(t_philo *philo, char *str, t_data *data);
-void	meal(t_data *data, t_philo *philo);
-void	forking(t_data *data, t_philo *philo);
-void	thinking(t_data *data, t_philo *philo);
 
 #endif
