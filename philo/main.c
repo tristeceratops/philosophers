@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/20 14:50:45 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:26:34 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	add_philo(t_philo **philo, int id)
 	new = malloc(sizeof(t_philo));
 	if (!new)
 		return ;
+	new->last_meal = -1;
 	new->philo_id = id;
 	new->isalive = 1;
 	new->l_fork = malloc(sizeof(pthread_mutex_t));

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/20 15:21:26 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:24:11 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct s_philo
 {
 	int				philo_id;
+	int				last_meal;
 	int				isalive;
 	pthread_t		thread;
 	pthread_mutex_t	*l_fork;

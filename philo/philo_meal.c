@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:07:57 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/20 15:24:24 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:23:58 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,13 @@ void	meal(t_data *data, t_philo *philo)
 	int	forks;
 
 	forks = 0;
-	if (philo->philo_id % 2)
+	printf("debut de repas pour philo n %d\n", philo->philo_id);
+	while (philo->isalive && !data->is_dead)
 	{
-		if(!pthread_mutex_lock(philo->l_fork))
-			forks++;
-		else
-			thinking(data, philo);
+		forking(data, philo);
+		forks++;
+		if (forks)
+			break ;
 	}
-	else if (!(philo->philo_id % 2))
-	{
-		if(!pthread_mutex_lock(philo->r_fork))
-			forks++;
-		else
-			thinking(data, philo);
-		if(!pthread_mutex_lock(philo->l_fork))
-		{
-			forks++;
-		}
-		else
-		{
-			thinking(data, philo);
-			usleep(10);
-		}
-		if(!pthread_mutex_lock(philo->r_fork))
-		{
-			forks++;
-		}
-		else
-		{
-			thinking(data, philo);
-			usleep(10);
-		}
-		if (forks == 2)
-			eating(data, philo);
-	}
+	pthread_exit(0);
 }

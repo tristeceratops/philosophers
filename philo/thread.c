@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 11:16:58 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/20 15:21:44 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:30:01 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@ int	init_threads(t_data *data, t_philo *philo)
 			printf("error thread\n");
 			break ;
 		}
-		usleep(50 * data->philo_max);
+		usleep(10 * (data->philo_max));
 		data->head = data->head->next;
 		j++;
 	}
-	for (int j = 0; j < i; j++)
+	gettimeofday(&data->start, NULL);
+	j = 0;
+	while (j < i)
     {
         pthread_join(head->thread, NULL);
 		head = head->next;
+		j++;
     }
 	return (1);
 }
