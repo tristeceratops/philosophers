@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/21 11:24:11 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 14:06:38 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 typedef struct s_philo
 {
 	int				philo_id;
-	int				last_meal;
+	long			last_meal;
 	int				isalive;
+	int				forks;
 	pthread_t		thread;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
@@ -39,6 +40,7 @@ typedef struct s_data
 	int				time_sleep;
 	int				rounds;
 	int				is_dead;
+	struct timeval	actual_time;
 	struct timeval	start;
 	t_philo			*head;
 }	t_data;
@@ -52,5 +54,7 @@ int		ft_isnum(char c);
 int		init_threads(t_data *data, t_philo *philo);
 void	printlog(t_philo *philo, char *str, t_data *data);
 void	meal(t_data *data, t_philo *philo);
+void	forking(t_data *data, t_philo *philo);
+void	thinking(t_data *data, t_philo *philo);
 
 #endif

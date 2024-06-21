@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/21 11:26:34 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:03:57 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	add_philo(t_philo **philo, int id)
 	if (!new)
 		return ;
 	new->last_meal = -1;
+	new->forks = 0;
 	new->philo_id = id;
 	new->isalive = 1;
 	new->l_fork = malloc(sizeof(pthread_mutex_t));
@@ -106,6 +107,7 @@ void	init_data(t_data *data, char **argv)
 	else
 		data->rounds = -1;
 	data->is_dead = 0;
+	gettimeofday(&data->actual_time, NULL);
 	gettimeofday(&data->start, NULL);
 }
 void connect_first_and_last(t_philo **philo) {
