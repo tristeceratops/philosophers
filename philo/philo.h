@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/21 17:00:17 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:27:04 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@
 typedef struct s_philo
 {
 	int				philo_id;
-	long			last_meal;
-	int				isalive;
-	int				forks;
-	pthread_t		thread;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*r_fork;
-	struct s_philo	*next;
-	struct s_philo	*prev;
-}	t_philo;
-
-typedef struct s_data
-{
 	int				philo_max;
 	int				time_die;
 	int				time_eat;
 	int				time_sleep;
 	int				rounds;
-	int				is_dead;
+	int				isalive;
+	int				forks;
+	pthread_t		thread;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
 	struct timeval	actual_time;
 	struct timeval	start;
-	t_philo			*head;
+	long			time_start;
+	long			time_last_meal;
+}	t_philo;
+
+typedef struct s_data
+{
+	int 			alive;
+	pthread_mutex_t	*lock;
+	t_philo			*philo;
 }	t_data;
 
 //utils
@@ -51,7 +51,7 @@ void	ft_putchar(int fd, char c);
 int		ft_atoi(const char *nptr);
 int		ft_check_str(const char *str);
 int		ft_isnum(char c);
-int		init_threads(t_data *data, t_philo *philo);
+int		init_threads(t_data *data);
 void	printlog(t_philo *philo, char *str, t_data *data);
 
 #endif
