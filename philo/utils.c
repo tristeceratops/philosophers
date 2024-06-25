@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/24 13:28:41 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:04:10 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	ft_check_str(const char *str)
 {
+	if (ft_atoi(str) <= 0)
+		return (0);
 	while (*str)
 	{
-		if (!ft_isnum(*str))
+		if (!ft_isnum(*str) && *str != '+' && *str != '-')
 			return (0);
 		str++;
 	}

@@ -37,7 +37,7 @@ void	*philo_behavior(void *arg) {
 
 	while (philo->isalive && philo->eat_count > 0) {
 		// Try to take forks
-		if (pthread_mutex_lock(philo->l_fork) && pthread_mutex_lock(philo->r_fork))
+		if (pthread_lock_mutext(philo->l_fork) && pthread_lock_mutext(philo->r_fork))
 		{
 			print_status(philo->philo_id, get_time_in_ms() - philo->start_time, "taking a fork");
 
