@@ -64,3 +64,12 @@ long	get_current_time(void)
 		write(2, "Error: gettimeofday\n", 20);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
+
+void	ft_usleep(long time)
+{
+	long	start;
+
+	start = get_current_time();
+	while (get_current_time() - start < time)
+		usleep(time / 10);
+}
