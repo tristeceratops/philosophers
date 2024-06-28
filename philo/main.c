@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/28 11:31:09 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:02:33 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,19 @@ int	init_philo(t_data *data)
 	i = 0;
 	while (i < data->philo_max)
 	{
-		data->philo[i].philo_id = i + 1;
 		data->philo[i].l_fork = malloc(sizeof(pthread_mutex_t)); // Allocate memory for l_fork
+		if (pthread_mutex_init(data->philo[i].l_fork, NULL))
+			return (1);
+		i++;
+	}
+	i = 0;
+	while (i < data->philo_max)
+	{
+		data->philo[i].philo_id = i + 1;
 		data->philo[i].isalive = 1;
 		data->philo[i].time_start = 0;
 		data->philo[i].time_last_meal = 0;
 		data->philo[i].data = data;
-		if (pthread_mutex_init(data->philo[i].l_fork, NULL))
-			return (1);
 		if (i == data->philo_max - 1)
 			data->philo[i].r_fork = data->philo[0].l_fork;
 		else
