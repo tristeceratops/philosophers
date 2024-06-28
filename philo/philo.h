@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/25 14:08:39 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:29:42 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_data
 	pthread_mutex_t	start_mutext;
 	pthread_mutex_t	eat_mutext;
 	pthread_mutex_t	finish_mutext;
-	t_philo			**philo;
+	t_philo			*philo;
 }	t_data;
 
 typedef struct s_thread
@@ -52,11 +52,12 @@ typedef struct s_thread
 	t_data			*data;
 }	t_thread;
 
-//utils
 int		ft_atoi(const char *nptr);
 int		ft_check_str(const char *str);
 int		ft_isnum(char c);
-int		init_threads(t_data *data);
 void	printlog(t_philo *philo, char *str);
+int		thread(t_thread *thread);
+void	ft_usleep(long time);
+long	get_current_time(void);
 
 #endif

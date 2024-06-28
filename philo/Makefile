@@ -1,6 +1,6 @@
 NAME := philo
-FLAGS := -Wall -Wextra -Werror
-FILES := main.c utils.c thread.c philo_meal.c
+FLAGS := -Wall -Wextra -Werror -g
+FILES := main.c utils.c thread.c
 OBJ := $(FILES:.c=.o)
 
 all: $(NAME)
