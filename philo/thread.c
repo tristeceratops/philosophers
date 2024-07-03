@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/03 15:14:54 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:33:58 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ void	philo_eat(t_philo *philo)
 	printlog(philo, philo->data, FORK);
 	pthread_mutex_lock(&philo->data->meal_check);
 	printlog(philo, philo->data, EAT);
-	ft_usleep(philo->data->time_eat);
 	pthread_mutex_unlock(&philo->data->meal_check);
+	ft_usleep(philo->data->time_eat, philo->data);
 	philo->numb_meal++;
 	philo->time_last_meal = get_current_time();
 	pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
 	pthread_mutex_unlock(&philo->data->forks[philo->r_fork_id]);
 }
 
-//si philo est pair, il attend longtemps genre au mois 15000 microsecondes
 void	*routine(void *arg)
 {
 	t_philo *p;
@@ -37,7 +36,7 @@ void	*routine(void *arg)
 	if (p->id % 2 == 0)
 	{
 		printlog(p, p->data, THINK);
-		ft_usleep(15000);
+		ft_usleep(p->data->time_eat / 2, p->data);
 	}	
 	while (!p->data->dead)
 	{
@@ -45,7 +44,7 @@ void	*routine(void *arg)
 		if (p->data->all_ate)
 			break ;
 		printlog(p, p->data, SLEEP);
-		ft_usleep(p->data->time_sleep);
+		ft_usleep(p->data->time_sleep, p->data);
 		printlog(p, p->data, THINK);
 	}
 	return (NULL);
@@ -59,16 +58,16 @@ void	death_check(t_data *data, t_philo *philos)
 	while (!data->all_ate)
 	{
 		i = -1;
-		while (++i < data->nb_philo && !data->dead)
+		while (++i < data->nb_philo && !data->dead && philos[i].time_last_meal > 0)
 		{
 			pthread_mutex_lock(&data->meal_check);
-			if ((philos[i].time_last_meal - get_current_time()) > data->time_death)
+			if ((get_current_time() - philos[i].time_last_meal) >= data->time_death)
 			{
 				printlog(&philos[i], data, DEATH);
 				data->dead = 1;
 			}
 			pthread_mutex_unlock(&data->meal_check);
-			ft_usleep(50);
+			ft_usleep(50, data);
 		}
 		if (data->dead)
 			break ;

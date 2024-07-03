@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/03 12:57:59 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:29:41 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,15 @@ long long	get_current_time(void)
 {
 	struct timeval	time;
 
-	if (gettimeofday(&time, NULL))
-		write(2, "Error: gettimeofday\n", 20);
+	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(long long time)
+void	ft_usleep(long long time, t_data *data)
 {
 	long long	start;
 
 	start = get_current_time();
-	while (get_current_time() - start < time)
+	while (get_current_time() - start < time && !data->dead)
 		usleep(time / 10);
 }
