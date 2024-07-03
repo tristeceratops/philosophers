@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/06/25 14:04:10 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:57:59 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_atoi(const char *nptr)
 	return (sign * result);
 }
 
-long	get_current_time(void)
+long long	get_current_time(void)
 {
 	struct timeval	time;
 
@@ -65,9 +65,9 @@ long	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(long time)
+void	ft_usleep(long long time)
 {
-	long	start;
+	long long	start;
 
 	start = get_current_time();
 	while (get_current_time() - start < time)
