@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 15:59:41 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:16:04 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DEATH "died"
-
-typedef enum s_status
-{
-	st_def,
-	st_eat,
-	st_sleep,
-	st_think,
-}	t_status;
-
 typedef struct s_philo
 {
 	int					id;
@@ -41,7 +32,6 @@ typedef struct s_philo
 	int					forks;
 	long long			time_last_meal;
 	struct s_data		*data;
-	t_status			status;
 	pthread_t			thread;
 }	t_philo;
 

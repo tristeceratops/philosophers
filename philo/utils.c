@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 15:59:43 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:53:56 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,13 @@ long long	get_current_time(void)
 void	ft_usleep(long long time, t_data *data)
 {
 	long long	start;
+	int			d;
 
 	start = get_current_time();
-	while (get_current_time() - start < time && !data->dead)
+	pthread_mutex_lock(&data->check_death);
+	d = data->dead;
+	pthread_mutex_unlock(&data->check_death);
+	while (get_current_time() - start < time && !d)
 		usleep(time / 10);
 }
 

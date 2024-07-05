@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 15:59:41 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:38:33 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@ void	printlog(t_philo *philo, t_data *data, char *str)
 {
 	struct timeval	time;
 	long long		timestamp;
-
+	int				dead;
+	
 	gettimeofday(&time, NULL);
 	timestamp = (time.tv_sec * 1000) + (time.tv_usec / 1000) - data->first_time;
 	pthread_mutex_lock(&data->check_death);
-	if (!data->dead)
-		printf("%lld %d %s\n", timestamp, philo->id, str);
+	dead = data->dead;
 	pthread_mutex_unlock(&data->check_death);
+	if (!dead)
+		printf("%lld %d %s\n", timestamp, philo->id, str);
 }
 
 int	check_args(int argc, char **argv)
@@ -69,7 +71,6 @@ int	init_philo(t_data *data)
 		data->philosophers[i].time_last_meal = -1;
 		data->philosophers[i].data = data;
 		data->philosophers[i].forks = 0;
-		data->philosophers[i].status = st_def;
 		i++;
 	}
 	return (1);
@@ -88,8 +89,6 @@ int	init_data(t_data *data, char **argv)
 	data->all_ate = 0;
 	data->first_time = 0;
 	if (pthread_mutex_init(&data->meal_check, NULL))
-		return (0);
-	if (pthread_mutex_init(&data->check_death, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->check_death, NULL))
 		return (0);
