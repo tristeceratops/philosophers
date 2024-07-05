@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/03 16:29:41 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:59:43 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,18 @@ void	ft_usleep(long long time, t_data *data)
 	start = get_current_time();
 	while (get_current_time() - start < time && !data->dead)
 		usleep(time / 10);
+}
+
+void	ft_putchar (char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putstr(char *s, int fd)
+{
+	while (*s)
+	{
+		ft_putchar(*s, fd);
+		s++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/03 16:29:56 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:59:41 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,24 @@
 # define THINK "is thinking"
 # define DEATH "died"
 
+typedef enum s_status
+{
+	st_def,
+	st_eat,
+	st_sleep,
+	st_think,
+}	t_status;
+
 typedef struct s_philo
 {
 	int					id;
 	int					numb_meal;
 	int					l_fork_id;
 	int					r_fork_id;
+	int					forks;
 	long long			time_last_meal;
 	struct s_data		*data;
+	t_status			status;
 	pthread_t			thread;
 }	t_philo;
 
@@ -47,7 +57,7 @@ typedef struct s_data
 	long long			first_time;
 	pthread_mutex_t		meal_check;
 	pthread_mutex_t		forks[300];
-	pthread_mutex_t		writing;
+	pthread_mutex_t		check_death;
 	t_philo				philosophers[300];
 }	t_data;
 
@@ -58,5 +68,8 @@ void		printlog(t_philo *philo, t_data *data, char *str);
 void		ft_usleep(long long time, t_data *data);
 long long	get_current_time(void);
 int			ft_thread(t_data *data);
+void		ft_putstr(char *s, int fd);
+void		ft_putchar(char c, int fd);
+void 		ft_exit(t_data *data);
 
 #endif

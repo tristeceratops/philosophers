@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/03 17:12:12 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:59:41 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	printlog(t_philo *philo, t_data *data, char *str)
 
 	gettimeofday(&time, NULL);
 	timestamp = (time.tv_sec * 1000) + (time.tv_usec / 1000) - data->first_time;
+	pthread_mutex_lock(&data->check_death);
 	if (!data->dead)
 		printf("%lld %d %s\n", timestamp, philo->id, str);
+	pthread_mutex_unlock(&data->check_death);
 }
 
 int	check_args(int argc, char **argv)
@@ -64,8 +66,10 @@ int	init_philo(t_data *data)
 		data->philosophers[i].numb_meal = 0;
 		data->philosophers[i].l_fork_id = i;
 		data->philosophers[i].r_fork_id = (i + 1) % data->nb_philo;
-		data->philosophers[i].time_last_meal = 0;
+		data->philosophers[i].time_last_meal = -1;
 		data->philosophers[i].data = data;
+		data->philosophers[i].forks = 0;
+		data->philosophers[i].status = st_def;
 		i++;
 	}
 	return (1);
@@ -85,7 +89,9 @@ int	init_data(t_data *data, char **argv)
 	data->first_time = 0;
 	if (pthread_mutex_init(&data->meal_check, NULL))
 		return (0);
-	if (pthread_mutex_init(&data->writing, NULL))
+	if (pthread_mutex_init(&data->check_death, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->check_death, NULL))
 		return (0);
 	return (init_forks(data) && init_philo(data));
 }
@@ -96,12 +102,14 @@ int	main(int argc, char **argv)
 
 	if (!check_args(argc, argv))
 	{
-		printf("error args\n");
+		ft_putstr("error args\n", 2);
+		ft_exit(&data);
 		return (1);
 	}
 	if (!init_data(&data, argv))
 	{
-		printf("error init\n");
+		ft_putstr("error init\n", 2);
+		ft_exit(&data);
 		return (1);
 	}
 	ft_thread(&data);
