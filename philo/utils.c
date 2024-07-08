@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 17:53:56 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:39:11 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,30 @@ void	ft_putstr(char *s, int fd)
 		ft_putchar(*s, fd);
 		s++;
 	}
+}
+
+void	ft_putnbr_fd(long long n, int fd)
+{
+    char	c;
+
+    if (n == -9223372036854775807LL - 1)
+    {
+        ft_putstr("−9223372036854775808", fd);
+        return;
+    }
+    if (n < 0)
+    {
+        ft_putchar('-', fd);
+        n = -n;
+    }
+    if (n > 9)
+    {
+        ft_putnbr_fd(n / 10, fd);
+        ft_putnbr_fd(n % 10, fd);
+    }
+    else
+    {
+        c = n + '0';
+        ft_putchar(c, fd);
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 16:16:04 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:26:56 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,20 @@ typedef struct s_data
 	pthread_mutex_t		meal_check;
 	pthread_mutex_t		forks[300];
 	pthread_mutex_t		check_death;
+	pthread_mutex_t		check_write;
 	t_philo				philosophers[300];
 }	t_data;
 
 int			ft_atoi(const char *nptr);
 int			ft_check_str(const char *str);
 int			ft_isnum(char c);
-void		printlog(t_philo *philo, t_data *data, char *str);
+void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
 void		ft_usleep(long long time, t_data *data);
 long long	get_current_time(void);
 int			ft_thread(t_data *data);
 void		ft_putstr(char *s, int fd);
 void		ft_putchar(char c, int fd);
 void 		ft_exit(t_data *data);
+void		ft_putnbr_fd(long long n, int fd);
 
 #endif

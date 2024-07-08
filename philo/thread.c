@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 18:37:51 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/08 15:27:35 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
-	printlog(philo, philo->data, FORK);
+	printlog(philo, philo->data, FORK, 0);
 	if (philo->data->nb_philo == 1)
 	{
 		philo->time_last_meal = get_current_time();
@@ -24,9 +24,9 @@ void	philo_eat(t_philo *philo)
 		return ;
 	}
 	pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
-	printlog(philo, philo->data, FORK);
+	printlog(philo, philo->data, FORK, 0);
 	pthread_mutex_lock(&philo->data->meal_check);
-	printlog(philo, philo->data, EAT);
+	printlog(philo, philo->data, EAT, 0);
 	philo->time_last_meal = get_current_time();
 	pthread_mutex_unlock(&philo->data->meal_check);
 	ft_usleep(philo->data->time_eat, philo->data);
@@ -43,7 +43,7 @@ void	*routine(void *arg)
 	p = (t_philo *)arg;
 	if (p->id % 2 == 0)
 	{
-		printlog(p, p->data, THINK);
+		printlog(p, p->data, THINK, 0);
 		ft_usleep(p->data->time_eat / 2, p->data);
 	}
 	pthread_mutex_lock(&p->data->check_death);
@@ -54,9 +54,9 @@ void	*routine(void *arg)
 		philo_eat(p);
 		if (p->data->all_ate || d)
 			break ;
-		printlog(p, p->data, SLEEP);
+		printlog(p, p->data, SLEEP, 0);
 		ft_usleep(p->data->time_sleep, p->data);
-		printlog(p, p->data, THINK);
+		printlog(p, p->data, THINK, 0);
 		pthread_mutex_lock(&p->data->check_death);
 		d = p->data->dead;
 		pthread_mutex_unlock(&p->data->check_death);
@@ -81,10 +81,10 @@ void	death_check(t_data *data, t_philo *philos)
 			pthread_mutex_lock(&data->meal_check);
 			if ((get_current_time() - philos[i].time_last_meal) >= data->time_death)
 			{
-				printlog(&philos[i], data, DEATH);
 				pthread_mutex_lock(&data->check_death);
 				data->dead = 1;
 				pthread_mutex_unlock(&data->check_death);
+				printlog(&philos[i], data, DEATH, 1);
 			}
 			pthread_mutex_unlock(&data->meal_check);
 			pthread_mutex_lock(&data->meal_check);
@@ -112,6 +112,7 @@ void ft_exit(t_data *data)
 	}
 	pthread_mutex_destroy(&data->meal_check);
 	pthread_mutex_destroy(&data->check_death);
+	pthread_mutex_destroy(&data->check_write);
 }
 
 void exit_thread(t_data *data, t_philo *philos)
