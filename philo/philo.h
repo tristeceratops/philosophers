@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 11:17:48 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:22:19 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@
 # define RED "\033[0;31m"
 # define CYAN "\033[0;36m"
 # define WHITE "\033[0;37m"
+
 typedef struct s_philo
 {
 	int					id;
-	int					numb_meal;
+	int					nb_meal;
 	int					l_fork_id;
 	int					r_fork_id;
 	int					forks;
-	long long			time_last_meal;
+	long long			tlm;
 	struct s_data		*data;
 	pthread_t			thread;
 }	t_philo;
@@ -65,7 +66,10 @@ long long	get_current_time(void);
 int			ft_thread(t_data *data);
 void		ft_putstr(char *s, int fd);
 void		ft_putchar(char c, int fd);
-void 		ft_exit(t_data *data);
+void		ft_exit(t_data *data);
 void		ft_putnbr_fd(long long n, int fd);
+void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
+void		exit_thread(t_data *data, t_philo *philos);
+void		ft_exit(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 15:59:41 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:46:02 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	init_philo(t_data *data)
 	while (i < data->nb_philo)
 	{
 		data->philosophers[i].id = i + 1;
-		data->philosophers[i].numb_meal = 0;
+		data->philosophers[i].nb_meal = 0;
 		data->philosophers[i].l_fork_id = i;
 		data->philosophers[i].r_fork_id = (i + 1) % data->nb_philo;
-		data->philosophers[i].time_last_meal = 0;
+		data->philosophers[i].tlm = 0;
 		data->philosophers[i].data = data;
 		i++;
 	}

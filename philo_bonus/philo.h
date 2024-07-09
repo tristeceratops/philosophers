@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/05 15:59:41 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:46:02 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 typedef struct s_philo
 {
 	int					id;
-	int					numb_meal;
-	long long			time_last_meal;
+	int					nb_meal;
+	long long			tlm;
 	struct s_data		*data;
 }	t_philo;
 

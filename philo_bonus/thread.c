@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/03 16:33:58 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:46:02 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	philo_eat(t_philo *philo)
 	printlog(philo, philo->data, EAT);
 	pthread_mutex_unlock(&philo->data->meal_check);
 	ft_usleep(philo->data->time_eat, philo->data);
-	philo->numb_meal++;
-	philo->time_last_meal = get_current_time();
+	philo->nb_meal++;
+	philo->tlm = get_current_time();
 	pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
 	pthread_mutex_unlock(&philo->data->forks[philo->r_fork_id]);
 }
@@ -58,10 +58,10 @@ void	death_check(t_data *data, t_philo *philos)
 	while (!data->all_ate)
 	{
 		i = -1;
-		while (++i < data->nb_philo && !data->dead && philos[i].time_last_meal > 0)
+		while (++i < data->nb_philo && !data->dead && philos[i].tlm > 0)
 		{
 			pthread_mutex_lock(&data->meal_check);
-			if ((get_current_time() - philos[i].time_last_meal) >= data->time_death)
+			if ((get_current_time() - philos[i].tlm) >= data->time_death)
 			{
 				printlog(&philos[i], data, DEATH);
 				data->dead = 1;
@@ -72,7 +72,7 @@ void	death_check(t_data *data, t_philo *philos)
 		if (data->dead)
 			break ;
 		i = 0;
-		while (data->nb_max_eat != -1 && i < data->nb_philo && philos[i].numb_meal >= data->nb_max_eat)
+		while (data->nb_max_eat != -1 && i < data->nb_philo && philos[i].nb_meal >= data->nb_max_eat)
 			i++;
 		if (i == data->nb_philo)
 			data->all_ate = 1;
