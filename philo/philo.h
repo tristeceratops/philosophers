@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/08 15:26:56 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:17:48 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DEATH "died"
+# define GREEN "\033[0;32m"
+# define RED "\033[0;31m"
+# define CYAN "\033[0;36m"
+# define WHITE "\033[0;37m"
 typedef struct s_philo
 {
 	int					id;

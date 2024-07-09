@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/08 16:44:53 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:18:27 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	printlog(t_philo *philo, t_data *data, char *str, int dead_call)
 	long long		timestamp;
 	int				dead;
 	
-	gettimeofday(&time, NULL);
 	pthread_mutex_lock(&data->check_write);
 	pthread_mutex_lock(&data->check_death);
 	dead = data->dead;
 	pthread_mutex_unlock(&data->check_death);
 	if (!dead || dead_call)
 	{
+		gettimeofday(&time, NULL);
 		timestamp = (time.tv_sec * 1000) + (time.tv_usec / 1000) - data->first_time;
 		// ft_putnbr_fd(timestamp, 1);
 		// ft_putstr(" ", 1);
@@ -32,7 +32,7 @@ void	printlog(t_philo *philo, t_data *data, char *str, int dead_call)
 		// ft_putstr(" ", 1);
 		// ft_putstr(str, 1);
 		// ft_putstr("\n", 1);
-		printf("%lld %d %s\n", timestamp, philo->id, str);
+		printf("%s%lld %s%d %s%s%s\n", GREEN, timestamp, RED, philo->id, CYAN, str, WHITE);
 	}
 	pthread_mutex_unlock(&data->check_write);
 }
