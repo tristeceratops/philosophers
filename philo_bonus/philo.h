@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 11:46:02 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:51:02 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ typedef struct s_philo
 {
 	int					id;
 	int					nb_meal;
+	int					l_fork_id;
+	int					r_fork_id;
+	int					forks;
 	long long			tlm;
 	struct s_data		*data;
 }	t_philo;
@@ -43,7 +46,9 @@ typedef struct s_data
 	int					dead;
 	int					all_ate;
 	long long			first_time;
-	sem_t				*forks;
+	pthread_mutex_t		meal_check;
+	pthread_mutex_t		check_death;
+	pthread_mutex_t		check_write;
 	t_philo				philosophers[300];
 }	t_data;
 

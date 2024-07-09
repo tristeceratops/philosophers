@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 11:46:02 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:51:34 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	init_philo(t_data *data)
 		data->philosophers[i].r_fork_id = (i + 1) % data->nb_philo;
 		data->philosophers[i].tlm = -1;
 		data->philosophers[i].data = data;
-		data->philosophers[i].forks = 0;
 		i++;
 	}
 	return (1);

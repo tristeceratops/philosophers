@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 13:22:19 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:04:00 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_philo
 	int					nb_meal;
 	int					l_fork_id;
 	int					r_fork_id;
-	int					forks;
 	long long			tlm;
 	struct s_data		*data;
 	pthread_t			thread;
