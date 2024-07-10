@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 13:51:02 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:04:00 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <string.h>
-# include <semaphore.h>
 # define FORK "has taken a fork"
 # define EAT "is eating"
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DEATH "died"
+# define GREEN "\033[0;32m"
+# define RED "\033[0;31m"
+# define CYAN "\033[0;36m"
+# define WHITE "\033[0;37m"
 
 typedef struct s_philo
 {
@@ -31,9 +34,9 @@ typedef struct s_philo
 	int					nb_meal;
 	int					l_fork_id;
 	int					r_fork_id;
-	int					forks;
 	long long			tlm;
 	struct s_data		*data;
+	pthread_t			thread;
 }	t_philo;
 
 typedef struct s_data
@@ -47,6 +50,7 @@ typedef struct s_data
 	int					all_ate;
 	long long			first_time;
 	pthread_mutex_t		meal_check;
+	pthread_mutex_t		forks[300];
 	pthread_mutex_t		check_death;
 	pthread_mutex_t		check_write;
 	t_philo				philosophers[300];
@@ -55,9 +59,16 @@ typedef struct s_data
 int			ft_atoi(const char *nptr);
 int			ft_check_str(const char *str);
 int			ft_isnum(char c);
-void		printlog(t_philo *philo, t_data *data, char *str);
+void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
 void		ft_usleep(long long time, t_data *data);
 long long	get_current_time(void);
 int			ft_thread(t_data *data);
+void		ft_putstr(char *s, int fd);
+void		ft_putchar(char c, int fd);
+void		ft_exit(t_data *data);
+void		ft_putnbr_fd(long long n, int fd);
+void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
+void		exit_thread(t_data *data, t_philo *philos);
+void		ft_exit(t_data *data);
 
 #endif
