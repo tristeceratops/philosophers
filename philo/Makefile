@@ -1,5 +1,5 @@
 NAME := philo
-FLAGS := -Wall -Wextra -Werror -g
+FLAGS := -Wall -Wextra -Werror -g -oFast
 FILES := main.c utils.c thread.c utils2.c ft_exit.c
 OBJ := $(FILES:.c=.o)
 
