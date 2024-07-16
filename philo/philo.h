@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 14:04:00 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:29:59 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			ft_atoi(const char *nptr);
 int			ft_check_str(const char *str);
 int			ft_isnum(char c);
 void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
-void		ft_usleep(long long time, t_data *data);
+void		ft_usleep(long long time);
 long long	get_current_time(void);
 int			ft_thread(t_data *data);
 void		ft_putstr(char *s, int fd);

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 15:26:35 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:30:39 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,11 @@ long long	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(long long time, t_data *data)
+void	ft_usleep(long long time)
 {
 	long long	start;
-	int			d;
 
 	start = get_current_time();
-	pthread_mutex_lock(&data->check_death);
-	d = data->dead;
-	pthread_mutex_unlock(&data->check_death);
-	while (get_current_time() - start < time && !d)
+	while (get_current_time() - start < time)
 		usleep(time / 10);
 }
