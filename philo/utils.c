@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/16 12:30:39 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:38:44 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ void	ft_usleep(long long time)
 
 	start = get_current_time();
 	while (get_current_time() - start < time)
-		usleep(time / 10);
+		usleep(50);
 }
