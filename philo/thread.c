@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/16 12:30:29 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:55:49 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
+	if (philo->id % 2 == 1)
+		pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
+	else
+		pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
 	printlog(philo, philo->data, FORK, 0);
 	if (philo->data->nb_philo == 1)
 	{
+		pthread_mutex_lock(&philo->data->meal_check);
 		philo->tlm = get_current_time();
+		pthread_mutex_unlock(&philo->data->meal_check);
 		ft_usleep(philo->data->time_death);
 		pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
 		return ;
 	}
-	pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
+	if (philo->id % 2 == 1)
+		pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
+	else
+		pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
 	printlog(philo, philo->data, FORK, 0);
 	pthread_mutex_lock(&philo->data->meal_check);
 	printlog(philo, philo->data, EAT, 0);
 	philo->tlm = get_current_time();
+	philo->nb_meal++;
 	pthread_mutex_unlock(&philo->data->meal_check);
 	ft_usleep(philo->data->time_eat);
-	philo->nb_meal++;
 	pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
 	pthread_mutex_unlock(&philo->data->forks[philo->r_fork_id]);
 }
@@ -39,6 +47,7 @@ void	*routine(void *arg)
 {
 	t_philo		*p;
 	int			d;
+	int			all_ate;
 
 	p = (t_philo *)arg;
 	printlog(p, p->data, THINK, 0);
@@ -46,17 +55,19 @@ void	*routine(void *arg)
 		ft_usleep(p->data->time_eat / 2);
 	pthread_mutex_lock(&p->data->check_death);
 	d = p->data->dead;
+	all_ate = p->data->all_ate;
 	pthread_mutex_unlock(&p->data->check_death);
 	while (!d)
 	{
 		philo_eat(p);
-		if (p->data->all_ate || d)
+		if (all_ate || d)
 			break ;
 		printlog(p, p->data, SLEEP, 0);
 		ft_usleep(p->data->time_sleep);
 		printlog(p, p->data, THINK, 0);
 		pthread_mutex_lock(&p->data->check_death);
 		d = p->data->dead;
+		all_ate = p->data->all_ate;
 		pthread_mutex_unlock(&p->data->check_death);
 	}
 	return (NULL);
@@ -78,14 +89,17 @@ void	death_checker(t_data *data, t_philo *philos, int i, long long *time)
 		pthread_mutex_unlock(&data->check_death);
 		printlog(&philos[i], data, DEATH, 1);
 	}
-	*time = tlm;
+	pthread_mutex_lock(&data->meal_check);
+	*time = philos[i + 1].tlm;
+	pthread_mutex_unlock(&data->meal_check);
 }
 
 void	death_check(t_data *data, t_philo *philos)
 {
 	int			i;
 	long long	time;
-
+	int			nb_meal;
+	
 	while (!data->all_ate)
 	{
 		i = -1;
@@ -99,11 +113,21 @@ void	death_check(t_data *data, t_philo *philos)
 		if (data->dead)
 			break ;
 		i = 0;
+		pthread_mutex_lock(&data->meal_check);
+		nb_meal = philos[i].nb_meal;
+		pthread_mutex_unlock(&data->meal_check);
 		while (data->nb_max_eat != -1 && i < data->nb_philo \
 			&& philos[i].nb_meal >= data->nb_max_eat)
+		{
 			i++;
+			pthread_mutex_lock(&data->meal_check);
+			nb_meal = philos[i].nb_meal;
+			pthread_mutex_unlock(&data->meal_check);
+		}
+		pthread_mutex_lock(&data->check_death);
 		if (i == data->nb_philo)
 			data->all_ate = 1;
+		pthread_mutex_unlock(&data->check_death);
 		usleep(80);
 	}
 }
