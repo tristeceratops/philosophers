@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/17 16:55:49 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:04:25 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ void	philo_eat(t_philo *philo)
 	printlog(philo, philo->data, FORK, 0);
 	if (philo->data->nb_philo == 1)
 	{
-		pthread_mutex_lock(&philo->data->meal_check);
-		philo->tlm = get_current_time();
-		pthread_mutex_unlock(&philo->data->meal_check);
-		ft_usleep(philo->data->time_death);
-		pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
+		is_solo(philo);
 		return ;
 	}
 	if (philo->id % 2 == 1)
@@ -62,9 +58,7 @@ void	*routine(void *arg)
 		philo_eat(p);
 		if (all_ate || d)
 			break ;
-		printlog(p, p->data, SLEEP, 0);
-		ft_usleep(p->data->time_sleep);
-		printlog(p, p->data, THINK, 0);
+		sleepy(p);
 		pthread_mutex_lock(&p->data->check_death);
 		d = p->data->dead;
 		all_ate = p->data->all_ate;
@@ -98,7 +92,6 @@ void	death_check(t_data *data, t_philo *philos)
 {
 	int			i;
 	long long	time;
-	int			nb_meal;
 	
 	while (!data->all_ate)
 	{
@@ -112,22 +105,7 @@ void	death_check(t_data *data, t_philo *philos)
 		}
 		if (data->dead)
 			break ;
-		i = 0;
-		pthread_mutex_lock(&data->meal_check);
-		nb_meal = philos[i].nb_meal;
-		pthread_mutex_unlock(&data->meal_check);
-		while (data->nb_max_eat != -1 && i < data->nb_philo \
-			&& philos[i].nb_meal >= data->nb_max_eat)
-		{
-			i++;
-			pthread_mutex_lock(&data->meal_check);
-			nb_meal = philos[i].nb_meal;
-			pthread_mutex_unlock(&data->meal_check);
-		}
-		pthread_mutex_lock(&data->check_death);
-		if (i == data->nb_philo)
-			data->all_ate = 1;
-		pthread_mutex_unlock(&data->check_death);
+		all_ate(data, philos);
 		usleep(80);
 	}
 }

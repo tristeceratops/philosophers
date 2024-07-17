@@ -6,50 +6,49 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:32:21 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 15:29:48 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:04:33 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_putchar(char c, int fd)
+void	sleepy(t_philo *philo)
 {
-	write(fd, &c, 1);
+	printlog(philo, philo->data, SLEEP, 0);
+	ft_usleep(philo->data->time_sleep);
+	printlog(philo, philo->data, THINK, 0);
 }
 
-void	ft_putstr(char *s, int fd)
+void	is_solo(t_philo *philo)
 {
-	while (*s)
-	{
-		ft_putchar(*s, fd);
-		s++;
-	}
+	pthread_mutex_lock(&philo->data->meal_check);
+	philo->tlm = get_current_time();
+	pthread_mutex_unlock(&philo->data->meal_check);
+	ft_usleep(philo->data->time_death);
+	pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
 }
 
-void	ft_putnbr_fd(long long n, int fd)
+void	all_ate(t_data *data, t_philo *philos)
 {
-	char	c;
+	int		nb_meal;
+	int		i;
 
-	if (n == -9223372036854775807LL - 1)
-	{
-		ft_putstr("−9223372036854775808", fd);
-		return ;
-	}
-	if (n < 0)
-	{
-		ft_putchar('-', fd);
-		n = -n;
-	}
-	if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
-	else
-	{
-		c = n + '0';
-		ft_putchar(c, fd);
-	}
+	i = 0;
+	pthread_mutex_lock(&data->meal_check);
+	nb_meal = philos[i].nb_meal;
+	pthread_mutex_unlock(&data->meal_check);
+	while (data->nb_max_eat != -1 && i < data->nb_philo \
+			&& philos[i].nb_meal >= data->nb_max_eat)
+		{
+			i++;
+			pthread_mutex_lock(&data->meal_check);
+			nb_meal = philos[i].nb_meal;
+			pthread_mutex_unlock(&data->meal_check);
+		}
+		pthread_mutex_lock(&data->check_death);
+		if (i == data->nb_philo)
+			data->all_ate = 1;
+		pthread_mutex_unlock(&data->check_death);
 }
 
 void	printlog(t_philo *philo, t_data *data, char *str, int dead_call)
