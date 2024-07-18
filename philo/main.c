@@ -88,13 +88,13 @@ int	main(int argc, char **argv)
 
 	if (!check_args(argc, argv))
 	{
-		ft_putstr("error args\n", 2);
+		printf("error args\n");
 		ft_exit(&data);
 		return (1);
 	}
 	if (!init_data(&data, argv))
 	{
-		ft_putstr("error init\n", 2);
+		printf("error init\n");
 		ft_exit(&data);
 		return (1);
 	}
