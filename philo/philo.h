@@ -66,6 +66,9 @@ int			ft_thread(t_data *data);
 void		ft_exit(t_data *data);
 void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
 void		exit_thread(t_data *data, t_philo *philos);
+void		sleepy(t_philo *philo);
 void		ft_exit(t_data *data);
+void		is_solo(t_philo *philo);
+void		all_ate(t_data *data, t_philo *philos);
 
 #endif
