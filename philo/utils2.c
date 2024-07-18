@@ -38,7 +38,7 @@ void	all_ate(t_data *data, t_philo *philos)
 	nb_meal = philos[i].nb_meal;
 	pthread_mutex_unlock(&data->meal_check);
 	while (data->nb_max_eat != -1 && i < data->nb_philo \
-			&& philos[i].nb_meal >= data->nb_max_eat)
+			&& nb_meal >= data->nb_max_eat)
 		{
 			i++;
 			pthread_mutex_lock(&data->meal_check);
