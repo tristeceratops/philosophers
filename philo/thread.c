@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/17 18:04:25 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:23:49 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	death_check(t_data *data, t_philo *philos)
 {
 	int			i;
 	long long	time;
-	
+
 	while (!data->all_ate)
 	{
 		i = -1;

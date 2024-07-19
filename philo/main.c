@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 13:51:34 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:32:35 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	main(int argc, char **argv)
 	if (!check_args(argc, argv))
 	{
 		printf("error args\n");
-		ft_exit(&data);
 		return (1);
 	}
 	if (!init_data(&data, argv))
