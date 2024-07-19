@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:35:55 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:55:08 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <string.h>
+# include <semaphore.h>
 # define FORK "has taken a fork"
 # define EAT "is eating"
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DEATH "died"
+# define SEM_NAME "/philo"
+
 
 typedef struct s_philo
 {
 	int					id;
 	int					nb_meal;
-	int					l_fork_id;
-	int					r_fork_id;
 	long long			tlm;
 	struct s_data		*data;
-	pthread_t			thread;
 }	t_philo;
 
 typedef struct s_data
@@ -45,11 +45,10 @@ typedef struct s_data
 	int					dead;
 	int					all_ate;
 	long long			first_time;
-	pthread_mutex_t		meal_check;
-	pthread_mutex_t		forks[300];
-	pthread_mutex_t		check_death;
+	struct s_philo		philosophers;
 	pthread_mutex_t		check_write;
-	t_philo				philosophers[300];
+	pthread_mutex_t		check_death;
+	sem_t				sema;
 }	t_data;
 
 int			ft_atoi(const char *nptr);

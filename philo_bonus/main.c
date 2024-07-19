@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:54:07 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:32:35 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,26 @@ int	check_args(int argc, char **argv)
 	i = 1;
 	if (argc != 5 && argc != 6)
 		return (0);
+	if (ft_atoi(argv[1]) > 300)
+		return (0);
 	while (i <= argc)
 	{
 		if (argv[i] && !ft_check_str(argv[i]))
 			return (0);
 		i++;
+	}
+	return (1);
+}
+
+int	init_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_mutex_init(&data->forks[i++], NULL))
+			return (0);
 	}
 	return (1);
 }
@@ -58,6 +73,8 @@ int	init_data(t_data *data, char **argv)
 	data->dead = 0;
 	data->all_ate = 0;
 	data->first_time = 0;
+	if (pthread_mutex_init(&data->meal_check, NULL))
+		return (0);
 	if (pthread_mutex_init(&data->check_death, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->check_write, NULL))
