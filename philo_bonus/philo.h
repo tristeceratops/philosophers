@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:55:08 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:01:19 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 typedef struct s_philo
 {
 	int					id;
+	int					pid_philo;
 	int					nb_meal;
 	long long			tlm;
 	struct s_data		*data;
@@ -44,6 +45,7 @@ typedef struct s_data
 	int					nb_max_eat;
 	int					dead;
 	int					all_ate;
+	int					pid_parent;
 	long long			first_time;
 	struct s_philo		philosophers;
 	pthread_mutex_t		check_write;
