@@ -6,10 +6,11 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 11:00:28 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:34:14 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//time_to_eat + max(time_to_sleep, time_to_eat * 2) < time_to_die
 #include "philo.h"
 
 int	check_args(int argc, char **argv)
@@ -27,6 +28,20 @@ int	check_args(int argc, char **argv)
 	}
 	return (1);
 }
+
+int	init_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_mutex_init(&data->forks[i++], NULL))
+			return (0);
+	}
+	return (1);
+}
+
 
 int	init_philo(t_data *data)
 {
@@ -57,7 +72,9 @@ int	init_data(t_data *data, char **argv)
 		data->nb_max_eat = ft_atoi(argv[5]);
 	data->dead = 0;
 	data->all_ate = 0;
-	data->first_time = 0;
+	data->first_time = 0;	
+	if (pthread_mutex_init(&data->meal_check, NULL))
+		return (0);
 	if (pthread_mutex_init(&data->check_death, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->check_write, NULL))

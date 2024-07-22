@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:23:49 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:34:01 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 void	philo_eat(t_philo *philo)
 {
-	if (philo->id % 2 == 1)
-		pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
-	else
-		pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
+	pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
 	printlog(philo, philo->data, FORK, 0);
 	if (philo->data->nb_philo == 1)
 	{
 		is_solo(philo);
 		return ;
 	}
-	if (philo->id % 2 == 1)
-		pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
-	else
-		pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
+	pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
 	printlog(philo, philo->data, FORK, 0);
 	pthread_mutex_lock(&philo->data->meal_check);
 	printlog(philo, philo->data, EAT, 0);
