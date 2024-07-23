@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:35:55 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_data
 	int					nb_max_eat;
 	int					dead;
 	int					all_ate;
-	long long			first_time;
+	long long			start_time;
 	pthread_mutex_t		meal_check;
 	pthread_mutex_t		forks[300];
 	pthread_mutex_t		check_death;
@@ -61,7 +61,7 @@ long long	get_current_time(void);
 int			ft_thread(t_data *data);
 void		ft_exit(t_data *data);
 void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
-void		exit_thread(t_data *data, t_philo *philos);
+void		join_thread(t_data *data, t_philo *philos);
 void		sleepy(t_philo *philo);
 void		ft_exit(t_data *data);
 void		is_solo(t_philo *philo);

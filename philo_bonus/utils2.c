@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:32:21 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:24:21 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	printlog(t_philo *philo, t_data *data, char *str, int dead_call)
 	if (!dead || dead_call)
 	{
 		gettimeofday(&t, NULL);
-		t_tamp = (t.tv_sec * 1000) + (t.tv_usec / 1000) - data->first_time;
+		t_tamp = (t.tv_sec * 1000) + (t.tv_usec / 1000) - data->start_time;
 		printf("%lld %d %s\n", t_tamp, philo->id, str);
 	}
 	pthread_mutex_unlock(&data->check_write);

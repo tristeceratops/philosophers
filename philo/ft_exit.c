@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:21:06 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/09 13:21:59 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:50:31 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_exit(t_data *data)
 	pthread_mutex_destroy(&data->check_write);
 }
 
-void	exit_thread(t_data *data, t_philo *philos)
+void	join_thread(t_data *data, t_philo *philos)
 {
 	int	i;
 
@@ -37,5 +37,4 @@ void	exit_thread(t_data *data, t_philo *philos)
 		pthread_join(philos[i].thread, NULL);
 		i++;
 	}
-	ft_exit(data);
 }

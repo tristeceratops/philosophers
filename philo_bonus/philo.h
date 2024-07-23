@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 11:01:19 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 	int					dead;
 	int					all_ate;
 	int					pid_parent;
-	long long			first_time;
+	long long			start_time;
 	struct s_philo		philosophers;
 	pthread_mutex_t		check_write;
 	pthread_mutex_t		check_death;
@@ -62,7 +62,7 @@ long long	get_current_time(void);
 int			ft_thread(t_data *data);
 void		ft_exit(t_data *data);
 void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
-void		exit_thread(t_data *data, t_philo *philos);
+void		join_thread(t_data *data, t_philo *philos);
 void		sleepy(t_philo *philo);
 void		ft_exit(t_data *data);
 void		is_solo(t_philo *philo);

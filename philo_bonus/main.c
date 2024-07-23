@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:32:35 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	init_data(t_data *data, char **argv)
 		data->nb_max_eat = ft_atoi(argv[5]);
 	data->dead = 0;
 	data->all_ate = 0;
-	data->first_time = 0;
+	data->start_time = 0;
 	if (pthread_mutex_init(&data->meal_check, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->check_death, NULL))

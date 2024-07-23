@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:01:17 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:23:49 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	ft_thread(t_data *data)
 
 	i = 0;
 	p = data->philosophers;
-	data->first_time = get_current_time();
+	data->start_time = get_current_time();
 	while (i < data->nb_philo)
 	{
 		if (pthread_create(&(p[i].thread), NULL, routine, &(p[i])))
@@ -125,6 +125,6 @@ int	ft_thread(t_data *data)
 		i++;
 	}
 	death_check(data, data->philosophers);
-	exit_thread(data, p);
+	join_thread(data, p);
 	return (0);
 }
