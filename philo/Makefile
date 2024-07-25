@@ -1,6 +1,6 @@
 NAME := philo
 FLAGS := -Wall -Wextra -Werror -g -oFast
-FILES := main.c utils.c thread.c utils2.c ft_exit.c
+FILES := main.c utils.c thread.c utils2.c ft_exit.c routine.c
 OBJ := $(FILES:.c=.o)
 
 all: $(NAME)

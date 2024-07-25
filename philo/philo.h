@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:42:54 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ void		sleepy(t_philo *philo);
 void		ft_exit(t_data *data);
 void		is_solo(t_philo *philo);
 void		all_ate(t_data *data, t_philo *philos);
+void		*routine(void *arg);
+void		*routine_last(void *arg);
 
 #endif
