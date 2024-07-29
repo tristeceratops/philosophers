@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 14:40:45 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/25 15:46:00 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:33:59 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	philo_eat(t_philo *philo)
 	printlog(philo, philo->data, FORK, 0);
 	if (philo->data->nb_philo == 1)
 		return (is_solo(philo));
+	usleep(100);
 	pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
 	printlog(philo, philo->data, FORK, 0);
 	printlog(philo, philo->data, EAT, 0);
