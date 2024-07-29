@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:41:55 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <string.h>
+# include <fcntl.h>
 # include <semaphore.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # define FORK "has taken a fork"
 # define EAT "is eating"
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DEATH "died"
-# define SEM_NAME "/philo"
-
+# define SEM "/philo"
 
 typedef struct s_philo
 {
 	int					id;
-	int					pid_philo;
 	int					nb_meal;
 	long long			tlm;
 	struct s_data		*data;
@@ -45,12 +46,14 @@ typedef struct s_data
 	int					nb_max_eat;
 	int					dead;
 	int					all_ate;
-	int					pid_parent;
+	int					philo_pid[300];
 	long long			start_time;
-	struct s_philo		philosophers;
-	pthread_mutex_t		check_write;
+	pthread_t			check_threads[300];
+	sem_t				sem;
+	t_philo				philosophers[300];
+	pthread_mutex_t		meal_check;
 	pthread_mutex_t		check_death;
-	sem_t				sema;
+	pthread_mutex_t		check_write;
 }	t_data;
 
 int			ft_atoi(const char *nptr);
@@ -67,5 +70,9 @@ void		sleepy(t_philo *philo);
 void		ft_exit(t_data *data);
 void		is_solo(t_philo *philo);
 void		all_ate(t_data *data, t_philo *philos);
+void		*routine(void *arg);
+void		*routine_last(void *arg);
+int			is_parent(t_data *data);
+int			waiting_all(t_data *data);
 
 #endif

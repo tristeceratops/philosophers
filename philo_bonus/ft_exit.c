@@ -37,5 +37,4 @@ void	join_thread(t_data *data, t_philo *philos)
 		pthread_join(philos[i].thread, NULL);
 		i++;
 	}
-	ft_exit(data);
 }

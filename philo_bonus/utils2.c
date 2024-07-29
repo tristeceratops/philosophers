@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:32:21 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/23 17:19:40 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/29 11:59:31 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	sleepy(t_philo *philo)
 	printlog(philo, philo->data, THINK, 0);
 }
 
-void	is_solo(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->meal_check);
-	philo->tlm = get_current_time();
-	pthread_mutex_unlock(&philo->data->meal_check);
-	ft_usleep(philo->data->time_death);
-	pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
-}
+// void	is_solo(t_philo *philo)
+// {
+// 	pthread_mutex_lock(&philo->data->meal_check);
+// 	philo->tlm = get_current_time();
+// 	pthread_mutex_unlock(&philo->data->meal_check);
+// 	ft_usleep(philo->data->time_death);
+// 	pthread_mutex_unlock(&philo->data->forks[philo->r_fork_id]);
+// }
 
 void	all_ate(t_data *data, t_philo *philos)
 {
@@ -56,16 +56,32 @@ void	printlog(t_philo *philo, t_data *data, char *str, int dead_call)
 	struct timeval	t;
 	long long		t_tamp;
 	int				dead;
+	int				all_ate;
 
 	pthread_mutex_lock(&data->check_write);
 	pthread_mutex_lock(&data->check_death);
 	dead = data->dead;
+	all_ate = data->all_ate;
 	pthread_mutex_unlock(&data->check_death);
-	if (!dead || dead_call)
+	if ((!dead && !all_ate) || dead_call)
 	{
 		gettimeofday(&t, NULL);
 		t_tamp = (t.tv_sec * 1000) + (t.tv_usec / 1000) - data->start_time;
 		printf("%lld %d %s\n", t_tamp, philo->id, str);
 	}
 	pthread_mutex_unlock(&data->check_write);
+}
+
+int		is_parent(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (data->philo_pid[i] == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }
