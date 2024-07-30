@@ -6,11 +6,10 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/29 15:12:01 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:52:15 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//time_to_eat + max(time_to_sleep, time_to_eat * 2) < time_to_die
 #include "philo.h"
 
 int	check_args(int argc, char **argv)

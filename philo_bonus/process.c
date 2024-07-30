@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 14:01:10 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/29 14:52:03 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:20:28 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*wait_routine(void *p)
 
 	philo = (t_philo *)p;
 	data = philo->data;
-	waitpid(data->check_threads[philo->id - 1], &status, 0);
+	waitpid(data->philo_pid[philo->id - 1], &status, 0);
 	if (status == 1)
 	{
 		pthread_mutex_lock(&data->check_death);
@@ -42,6 +42,5 @@ int	waiting_all(t_data *data)
 	}
 	i = 0;
 	while (i < data->nb_philo)
-		pthread_join(&data->check_threads[i++], NULL);
-	
+		pthread_detach(&data->check_threads[i++]);	
 }

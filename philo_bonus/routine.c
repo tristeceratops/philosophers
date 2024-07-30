@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 14:40:45 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/29 15:04:49 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:01:22 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->forks[philo->r_fork_id]);
+	sem_wait(&philo->data->sem);
 	printlog(philo, philo->data, FORK, 0);
 	usleep(100);
-	pthread_mutex_lock(&philo->data->forks[philo->l_fork_id]);
+	sem_wait(&philo->data->sem);
 	printlog(philo, philo->data, FORK, 0);
 	printlog(philo, philo->data, EAT, 0);
-	pthread_mutex_lock(&philo->data->meal_check);
 	philo->tlm = get_current_time();
 	philo->nb_meal++;
-	pthread_mutex_unlock(&philo->data->meal_check);
 	ft_usleep(philo->data->time_eat);
-	pthread_mutex_unlock(&philo->data->forks[philo->l_fork_id]);
-	pthread_mutex_unlock(&philo->data->forks[philo->r_fork_id]);
+	sem_post(&philo->data->sem);
+	sem_post(&philo->data->sem);
 }
 
 void	*routine(void *arg)
