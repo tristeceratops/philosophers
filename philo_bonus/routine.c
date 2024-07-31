@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 14:40:45 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/30 14:01:22 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:03:15 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ void	*routine(void *arg)
 		philo_eat(p);
 		sleepy(p);
 	}
-	return (NULL);
+	return (0);
 }

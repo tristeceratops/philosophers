@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:32:21 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/29 11:59:31 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:55:29 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,32 @@ int		is_parent(t_data *data)
 		i++;
 	}
 	return (1);
+}
+
+int	isint(char *n)
+{
+	int		nbr;
+	long	nbr2;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (n[i] == '+' || n[i] == '-')
+		i++;
+	j = i;
+	while (ft_isdigit(n[j]))
+		j++;
+	if (j != ft_strlen(n) || i == j)
+		return (0);
+	nbr = ft_atoi(n);
+	nbr2 = ft_atol(n);
+	n += i;
+	if (nbr == nbr2)
+	{
+		if (nbr >= 0 && ft_strlen(n) == ft_intlen(nbr))
+			return (1);
+		if (nbr < 0 && ft_strlen(n) + 1 == ft_intlen(nbr))
+			return (1);
+	}
+	return (0);
 }

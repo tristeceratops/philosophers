@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/29 15:41:55 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:54:40 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ void		is_solo(t_philo *philo);
 void		all_ate(t_data *data, t_philo *philos);
 void		*routine(void *arg);
 void		*routine_last(void *arg);
+int			isint(char *n);
+int			ft_isspace(char c);
+int			ft_isdigit(int c);
+long		ft_atol(const char *nb);
+int			ft_strlen(const char *str);
+int			ft_intlen(int n);
 int			is_parent(t_data *data);
 int			waiting_all(t_data *data);
 

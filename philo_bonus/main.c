@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/30 13:52:15 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 15:02:04 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int argc, char **argv)
 		ft_exit(&data);
 		return (1);
 	}
+	//creating all process
 	ft_thread(&data);
 	return (0);
 }

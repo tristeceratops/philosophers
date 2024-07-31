@@ -6,14 +6,16 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:01:00 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/16 15:38:44 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:56:47 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_check_str(const char *str)
+int	ft_check_str(char *str)
 {
+	if (!isint(str))
+		return (0);
 	if (ft_atoi(str) <= 0)
 		return (0);
 	while (*str)
@@ -32,28 +34,20 @@ int	ft_isnum(char c)
 	return (0);
 }
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *nb)
 {
-	int	result;
-	int	sign;
+	int	integer;
+	int	mult;
 
-	result = 0;
-	sign = 1;
-	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13))
-		nptr++;
-	if (*nptr == '-')
-	{
-		sign = -1;
-		nptr++;
-	}
-	else if (*nptr == '+')
-		nptr++;
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		result = result * 10 + (*nptr - '0');
-		nptr++;
-	}
-	return (sign * result);
+	integer = 0;
+	mult = 1;
+	while (ft_isspace(*nb))
+		nb++;
+	if (*nb == '-' || *nb == '+')
+		mult = 44 - *nb++;
+	while (ft_isdigit(*nb))
+		integer = (integer * 10) + (*nb++ - 48);
+	return (integer * mult);
 }
 
 long long	get_current_time(void)

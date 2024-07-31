@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:44:48 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/25 15:44:38 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:58:11 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_args(int argc, char **argv)
 
 	i = 1;
 	if (argc != 5 && argc != 6)
+		return (0);
+	if (ft_atoi(argv[1]) > 300)
 		return (0);
 	while (i <= argc)
 	{

@@ -6,7 +6,7 @@
 /*   By: ewoillar <ewoillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:19:41 by ewoillar          #+#    #+#             */
-/*   Updated: 2024/07/25 14:42:54 by ewoillar         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:53:55 by ewoillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_data
 }	t_data;
 
 int			ft_atoi(const char *nptr);
-int			ft_check_str(const char *str);
+int			ft_check_str(char *str);
 int			ft_isnum(char c);
 void		printlog(t_philo *philo, t_data *data, char *str, int dead_call);
 void		ft_usleep(long long time);
@@ -68,5 +68,11 @@ void		is_solo(t_philo *philo);
 void		all_ate(t_data *data, t_philo *philos);
 void		*routine(void *arg);
 void		*routine_last(void *arg);
+int			isint(char *n);
+int			ft_isspace(char c);
+int			ft_isdigit(int c);
+long		ft_atol(const char *nb);
+int			ft_strlen(const char *str);
+int			ft_intlen(int n);
 
 #endif
